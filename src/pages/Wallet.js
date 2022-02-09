@@ -42,6 +42,8 @@ class Wallet extends React.Component {
   render() {
     const { email, currencies, total, expenses } = this.props;
     const { value, description } = this.state;
+    const table = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
+      'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     return (
       <>
         <header>
@@ -115,6 +117,13 @@ class Wallet extends React.Component {
             <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
           </label>
         </form>
+        <table>
+          <thead>
+            <tr>
+              {table.map((element) => (<th key={ element }>{element}</th>))}
+            </tr>
+          </thead>
+        </table>
       </>
     );
   }
