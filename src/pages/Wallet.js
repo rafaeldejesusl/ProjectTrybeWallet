@@ -123,6 +123,20 @@ class Wallet extends React.Component {
               {table.map((element) => (<th key={ element }>{element}</th>))}
             </tr>
           </thead>
+          <tbody>
+            {expenses.map((el) => (
+              <tr key={ el.id }>
+                <td>{el.description}</td>
+                <td>{el.tag}</td>
+                <td>{el.method}</td>
+                <td>{Number(el.value).toFixed(2)}</td>
+                <td>{el.exchangeRates[el.currency].name.split('/Real Brasileiro')}</td>
+                <td>{Number(el.exchangeRates[el.currency].ask).toFixed(2)}</td>
+                <td>{(el.exchangeRates[el.currency].ask * el.value).toFixed(2)}</td>
+                <td>Real</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </>
     );
