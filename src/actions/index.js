@@ -2,6 +2,7 @@
 export const SAVE_USER = 'SAVE_USER';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const saveUserAction = (payload) => ({
   type: SAVE_USER,
@@ -40,3 +41,8 @@ export const fetchExpenseAction = (obj) => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const deleteExpenseAction = (payload) => ({
+  type: DELETE_EXPENSE,
+  payload,
+});

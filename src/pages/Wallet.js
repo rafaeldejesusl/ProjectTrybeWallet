@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencyAction, fetchExpenseAction } from '../actions';
+import { deleteExpenseAction, fetchCurrencyAction, fetchExpenseAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -15,11 +15,20 @@ class Wallet extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.getTotal = this.getTotal.bind(this);
   }
 
   componentDidMount() {
     const { fetchCurrency } = this.props;
     fetchCurrency();
+  }
+
+  getTotal() {
+    const { expenses } = this.props;
+    const total = expenses
+      .reduce((prev, cur) => prev + (cur.exchangeRates[cur.currency].ask * cur.value), 0);
+    return total;
   }
 
   handleChange({ target }) {
@@ -39,16 +48,22 @@ class Wallet extends React.Component {
     this.setState({ value: 0 });
   }
 
+  handleDelete({ target }) {
+    const { deleteExpense } = this.props;
+    deleteExpense(target.id);
+  }
+
   render() {
-    const { email, currencies, total, expenses } = this.props;
+    const { email, currencies, expenses } = this.props;
     const { value, description } = this.state;
+    const result = this.getTotal();
     const table = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     return (
       <>
         <header>
           <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">{expenses.length === 0 ? 0 : total}</p>
+          <p data-testid="total-field">{result.toFixed(2)}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <form>
@@ -134,6 +149,16 @@ class Wallet extends React.Component {
                 <td>{Number(el.exchangeRates[el.currency].ask).toFixed(2)}</td>
                 <td>{(el.exchangeRates[el.currency].ask * el.value).toFixed(2)}</td>
                 <td>Real</td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    id={ el.id }
+                    onClick={ this.handleDelete }
+                  >
+                    X
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -147,21 +172,21 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
-  total: state.wallet.total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrency: () => dispatch(fetchCurrencyAction()),
   fetchExpense: (state) => dispatch(fetchExpenseAction(state)),
+  deleteExpense: (state) => dispatch(deleteExpenseAction(state)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  total: PropTypes.number.isRequired,
   fetchCurrency: PropTypes.func.isRequired,
   fetchExpense: PropTypes.func.isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
