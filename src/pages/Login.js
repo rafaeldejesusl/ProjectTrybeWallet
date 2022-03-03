@@ -1,4 +1,5 @@
 import React from 'react';
+import './Login.css'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveUserAction } from '../actions';
@@ -42,28 +43,40 @@ class Login extends React.Component {
   render() {
     const { email, password, isDisabled } = this.state;
     return (
-      <div>
-        <input
-          type="email"
-          name="email"
-          value={ email }
-          data-testid="email-input"
-          onChange={ this.handleChange }
-        />
-        <input
-          type="password"
-          name="password"
-          value={ password }
-          data-testid="password-input"
-          onChange={ this.handleChange }
-        />
-        <button
-          type="submit"
-          disabled={ isDisabled }
-          onClick={ this.handleClick }
-        >
-          Entrar
-        </button>
+      <div className='background'>
+        <div className='card-panel logincard'>
+          <h4>TrybeWallet</h4>
+          <div className="input-field">
+            <input
+              type="email"
+              name="email"
+              className="input"
+              placeholder="Email"
+              value={ email }
+              data-testid="email-input"
+              onChange={ this.handleChange }
+            />
+          </div>
+          <div className="input-field">
+            <input
+              type="password"
+              name="password"
+              className="input"
+              placeholder="Senha"
+              value={ password }
+              data-testid="password-input"
+              onChange={ this.handleChange }
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn waves-effect waves-light"
+            disabled={ isDisabled }
+            onClick={ this.handleClick }
+          >
+            Entrar
+          </button>
+        </div>
       </div>
     );
   }

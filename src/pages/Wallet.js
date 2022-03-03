@@ -1,4 +1,5 @@
 import React from 'react';
+import './Wallet.css'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteExpenseAction,
@@ -88,6 +89,7 @@ class Wallet extends React.Component {
     const result = this.getTotal();
     const addBut = (
       <button
+        className="waves-effect waves-light btn button"
         type="submit"
         onClick={ this.handleClick }
       >
@@ -98,11 +100,12 @@ class Wallet extends React.Component {
     return (
       <>
         <header>
-          <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">{result.toFixed(2)}</p>
-          <p data-testid="header-currency-field">BRL</p>
+          <h6 data-testid="email-field">{`Email: ${email}`}</h6>
+          <h6 data-testid="total-field">{`Total: ${result.toFixed(2)}`}</h6>
+          <h6 data-testid="header-currency-field">Moeda: BRL</h6>
         </header>
-        <form>
+        <form className="form row">
+          <div className="col s2">
           <label htmlFor="value-input">
             Valor:
             <input
@@ -114,6 +117,8 @@ class Wallet extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
+          </div>
+          <div className="col s2">
           <label htmlFor="description-input">
             Descrição:
             <input
@@ -125,11 +130,14 @@ class Wallet extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
+          </div>
+          <div className="col s2">
           <label htmlFor="currency-input">
             Moeda:
             <select
               name="currency"
               id="currency-input"
+              className="browser-default"
               data-testid="currency-input"
               onChange={ this.handleChange }
               value={ currency }
@@ -142,11 +150,14 @@ class Wallet extends React.Component {
               )))} */}
             </select>
           </label>
+          </div>
+          <div className="col s2">
           <label htmlFor="method-input">
             Método de Pagamento:
             <select
               name="method"
               id="method-input"
+              className="browser-default"
               data-testid="method-input"
               onChange={ this.handleChange }
               value={ method }
@@ -156,11 +167,14 @@ class Wallet extends React.Component {
               <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
+          </div>
+          <div className="col s2">
           <label htmlFor="tag-input">
             Tag:
             <select
               name="tag"
               id="tag-input"
+              className="browser-default"
               data-testid="tag-input"
               onChange={ this.handleChange }
               value={ tag }
@@ -171,12 +185,15 @@ class Wallet extends React.Component {
               <option value="Transporte">Transporte</option>
               <option value="Saúde">Saúde</option>
             </select>
-            {isEditing
-              ? <button type="submit" onClick={ this.handleClick }>Editar despesa</button>
-              : addBut}
           </label>
+          </div>
+          <div className="col s2">
+            {isEditing
+              ? <button className="waves-effect waves-light btn button" type="submit" onClick={ this.handleClick }>Editar despesa</button>
+              : addBut}
+          </div>
         </form>
-        <table>
+        <table className="centered teal accent-3 striped">
           <thead>
             <tr>
               {table.map((element) => (<th key={ element }>{element}</th>))}
@@ -197,6 +214,7 @@ class Wallet extends React.Component {
                   <button
                     type="button"
                     data-testid="edit-btn"
+                    className="waves-effect waves-light btn-small yellow darken-3"
                     id={ el.id }
                     onClick={ this.handleEdit }
                   >
@@ -205,6 +223,7 @@ class Wallet extends React.Component {
                   <button
                     type="button"
                     data-testid="delete-btn"
+                    className="waves-effect waves-light btn-small red darken-3"
                     id={ el.id }
                     onClick={ this.handleDelete }
                   >

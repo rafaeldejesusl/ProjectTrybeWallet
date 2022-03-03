@@ -22,7 +22,3 @@ Neste projeto você vai desenvolver uma carteira de controle de gastos com conve
   - Adicionar, remover e editar um gasto;
   - Visualizar uma tabelas com seus gastos;
   - Visualizar o total de gastos convertidos para uma moeda de escolha;
-
-Para entregar o seu projeto você deverá criar um Pull Request neste repositório.
-
-Lembre-se que você pode consultar nosso conteúdo sobre Git & GitHub no Course sempre que precisar!
