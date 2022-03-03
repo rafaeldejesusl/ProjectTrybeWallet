@@ -23,7 +23,7 @@
     "redux-thunk": "2.3.0",
     "stylelint-order": "4.1.0"
   },
-  "homepage": "https://rafaeldejesusl.github.io/ProjectTrybeWallet",
+  "homepage": "https:\/\/rafaeldejesusl.github.io/ProjectTrybeWallet/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
