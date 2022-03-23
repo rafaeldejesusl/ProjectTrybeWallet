@@ -10,6 +10,7 @@ class Wallet extends React.Component {
     super();
     this.state = {
       id: 0,
+      count: 0,
       value: 0,
       description: '',
       currency: 'USD',
@@ -47,18 +48,20 @@ class Wallet extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    const { value,
+    const { value, count,
       description, currency, method, tag, isEditing, id, exchangeRates } = this.state;
     const { expenses, fetchExpense, editExpense } = this.props;
     if (isEditing) {
       const array = expenses;
       const obj = { id, value, description, currency, method, tag, exchangeRates };
-      array.splice(id, 1, obj);
+      const position = array.map((el) => el.id).indexOf(id);
+      array.splice(position, 1, obj);
       editExpense(array);
       this.setState({ isEditing: false });
     } else {
-      const obj = { id: expenses.length, value, description, currency, method, tag };
+      const obj = { id: count, value, description, currency, method, tag };
       fetchExpense(obj);
+      this.setState((prev) => ({ count: prev.count + 1 }));
     }
     this.setState({ value: 0 });
   }
@@ -254,7 +257,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   fetchCurrency: PropTypes.func.isRequired,
   fetchExpense: PropTypes.func.isRequired,
